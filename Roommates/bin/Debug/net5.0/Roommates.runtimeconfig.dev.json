@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\hulik\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\hulik\\.nuget\\packages"
+    ]
+  }
+}
