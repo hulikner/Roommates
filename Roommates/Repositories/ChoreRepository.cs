@@ -16,7 +16,7 @@ namespace Roommates.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Name";
+                    cmd.CommandText = "SELECT Id, Name FROM Chore";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -78,10 +78,12 @@ namespace Roommates.Repositories
         {
             using(SqlConnection conn = Connection)
             {
+                conn.Open();
+
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO Chore (Name)
-                                        OUTPUT INSERTED, Id
+                                        OUTPUT INSERTED.Id
                                         VALUES (@name)";
                     cmd.Parameters.AddWithValue("@name", chore.Name);
                     int id = (int)cmd.ExecuteScalar();
@@ -120,6 +122,51 @@ namespace Roommates.Repositories
                             chores.Add(chore);
                         }
                         return chores;
+                    }
+                }
+            }
+        }
+
+        public void AssignChore(int roommateId, int choreId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO RoommateChore (RoommateId, ChoreId)
+                                        VALUES (@roommateId, @choreId)";
+                    cmd.Parameters.AddWithValue("@roommateId", roommateId);
+                    cmd.Parameters.AddWithValue("@choreId", choreId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public Dictionary<string, int> GetChoreCounts()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT FirstName, COUNT (rc.Id) AS NumChores
+                                        FROM Roommate rm
+                                        LEFT JOIN RoommateChore rc ON rm.Id = rc.RoommateId
+                                        GROUP BY rm.FirstName, rm.Id";
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Dictionary<string, int> counts = new Dictionary<string, int>();
+
+                        while (reader.Read())
+                        {
+                            string nameValue = reader.GetString(reader.GetOrdinal("FirstName"));
+                            int choreCount = reader.GetInt32(reader.GetOrdinal("NumChores"));
+
+                            counts.Add(nameValue, choreCount);
+                        }
+                        return counts;
                     }
                 }
             }
