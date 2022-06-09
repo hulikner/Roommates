@@ -2314,19 +2314,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hulik\\.nuget\\packages\\": {}
+    "C:\\Users\\deric\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hulik\\workspace\\csharp\\Roommates\\Roommates\\Roommates\\Roommates.csproj",
+      "projectUniqueName": "C:\\Users\\deric\\workspace\\csharp\\Roommates\\Roommates\\Roommates.csproj",
       "projectName": "Roommates",
-      "projectPath": "C:\\Users\\hulik\\workspace\\csharp\\Roommates\\Roommates\\Roommates\\Roommates.csproj",
-      "packagesPath": "C:\\Users\\hulik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hulik\\workspace\\csharp\\Roommates\\Roommates\\Roommates\\obj\\",
+      "projectPath": "C:\\Users\\deric\\workspace\\csharp\\Roommates\\Roommates\\Roommates.csproj",
+      "packagesPath": "C:\\Users\\deric\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\deric\\workspace\\csharp\\Roommates\\Roommates\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\hulik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\deric\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
