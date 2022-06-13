@@ -78,5 +78,62 @@ namespace Roommates.Repositories
                 }
             }
         }
+
+        public List<Roommate> GetRoommatesByChoreId(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT rm.Id, rm.FirstName
+                                        FROM Roommates rm
+                                        JOIN RoommateChore rc ON rc.RoommateId = rm.Id
+                                        WHERE RoommateChore.ChoreId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Roommate> list = new List<Roommate>();
+
+                        while (reader.Read())
+                        {
+                            int idColumnPosition = reader.GetOrdinal("Id");
+                            int idValue = reader.GetInt32(idColumnPosition);
+                            int nameColumnPosition = reader.GetOrdinal("FirstName");
+                            string nameValue = reader.GetString(nameColumnPosition);
+
+                            Roommate roommate = new Roommate
+                            {
+                                Id = idValue,
+                                FirstName = nameValue,
+                            };
+                            list.Add(roommate);
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public void UpdateRoommateChore(int roommateId, int choreId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE RoommateChore
+                                        SET choreId = @choreId,
+                                        WHERE RoommateId = @roommateId";
+                    cmd.Parameters.AddWithValue("@choreId", choreId);
+                    cmd.Parameters.AddWithValue("@roommateId", roommateId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+
